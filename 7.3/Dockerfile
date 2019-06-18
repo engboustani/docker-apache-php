@@ -1,6 +1,7 @@
 FROM ubuntu:bionic
-MAINTAINER romeOz <serggalka@gmail.com>
+MAINTAINER Hossein Boustani <eng.boustani@gmail.com>
 
+ENV TIMEZONE Asia/Tehran
 ENV OS_LOCALE="en_US.UTF-8"
 RUN apt-get update && apt-get install -y locales && locale-gen ${OS_LOCALE}
 ENV LANG=${OS_LOCALE} \
