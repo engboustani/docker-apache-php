@@ -3,7 +3,8 @@ MAINTAINER Hossein Boustani <eng.boustani@gmail.com>
 
 ENV TIMEZONE Asia/Tehran
 ENV OS_LOCALE="en_US.UTF-8"
-RUN apt-get update && apt-get install -y locales && locale-gen ${OS_LOCALE}
+RUN apt-get update
+RUN apt-get install -y locales && locale-gen ${OS_LOCALE}
 ENV LANG=${OS_LOCALE} \
     LANGUAGE=${OS_LOCALE} \
     LC_ALL=${OS_LOCALE} \
@@ -11,7 +12,8 @@ ENV LANG=${OS_LOCALE} \
 
 ENV APACHE_CONF_DIR=/etc/apache2 \
     PHP_CONF_DIR=/etc/php/7.3 \
-    PHP_DATA_DIR=/var/lib/php
+    PHP_DATA_DIR=/var/lib/php \
+    PHP_EXT_DIR=/usr/lib/php
 
 COPY ./app /var/www/app/
 COPY entrypoint.sh /sbin/entrypoint.sh
@@ -43,6 +45,7 @@ RUN	\
 COPY ./configs/apache2.conf ${APACHE_CONF_DIR}/apache2.conf
 COPY ./configs/app.conf ${APACHE_CONF_DIR}/sites-enabled/app.conf
 COPY ./configs/php.ini  ${PHP_CONF_DIR}/apache2/conf.d/custom.ini
+COPY ./ext/ioncube.so ${PHP_EXT_DIR}/ioncube.so
 
 WORKDIR /var/www/app/
 
